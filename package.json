@@ -1,7 +1,7 @@
 {
   "name": "libmark",
   "version": "0.0.1",
-  "description": "Manage your bookmarks more intelligently.",
+  "description": "Smart bookmark manager",
   "license": "MIT",
   "homepage": "https://github.com/bbmoz/libmark/blob/master/README.md",
   "repository": {

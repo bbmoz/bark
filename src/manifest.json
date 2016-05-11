@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "libmark",
-  "description": "Manage your bookmarks more intelligently.",
+  "description": "Smart bookmark manager",
   "version": "0",
 
   "browser_action": {
