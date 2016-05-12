@@ -18,7 +18,8 @@
     "node": ">=4.2.0"
   },
   "scripts": {
-    "test": "standard src/**/*.js | snazzy"
+    "test": "standard src/**/*.js | snazzy",
+    "publish": ""
   },
   "files": [
     "src/"

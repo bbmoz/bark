@@ -1,12 +1,12 @@
 ;(function omnibox (_c) {
   _c.omnibox.onInputChanged.addListener(function (text, suggest) {
     suggest([{
-      content: text + ' +', description: 'add to zone'
+      content: '+', description: 'zone'
     }])
   })
 
   _c.omnibox.onInputEntered.addListener(function (omniboxText) {
-    if (omniboxText === 'libmark +') {
+    if (omniboxText === '+') {
       _c.runtime.sendMessage('+')
     }
   })

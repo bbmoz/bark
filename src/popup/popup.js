@@ -1,5 +1,5 @@
-;(function popup (_c) {
-  var zoned = []
+;(function popup (_c, _w) {
+  var zone = []
 
   function updateNumZoned (amount) {
     _c.browserAction.getBadgeText(function (badgeText) {
@@ -16,7 +16,7 @@
       lastFocusedWindow: true
     }, function (tabs) {
       var curPageUrl = tabs[0].url
-      zoned.push(curPageUrl)
+      zone.push(curPageUrl)
     })
   }
 
@@ -26,4 +26,12 @@
       addCurPageToZoned()
     }
   })
-}(chrome))
+
+  _w.getElementById('btn-change').addEventListener('click', function () {
+    // change browser bookmarks tree to be the one from app
+  })
+
+  _w.getElementById('btn-save').addEventListener('click', function () {
+    // save bookmark tree from app to be viewed and used later
+  })
+}(chrome, window))
