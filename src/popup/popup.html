@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>libmark</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
     <link rel="stylesheet" href="popup.css">
     <script src="popup.js" defer></script>
   </head>
@@ -12,20 +13,43 @@
     </header>
 
     <main>
-      <!-- saved bookmark trees ordered by date [change name, delete] (left) -->
+      <section title="active">
+        <h1>Active</h1>
+        <h2>Tree #1</h2>
+      </section>
 
-      <!-- smart/current bookmark tree (center) -->
+      <section title="zoned">
+        <h1>Zoned</h1>
+      </section>
 
-      <!-- for smart only, shows unmanaged/zoned bookmarks (below) -->
+      <section title="saved">
+        <h1>Saved</h1>
+        <ol>
+          <li id="saved-1">
+            <a href="#">Tree #1</a>
+            <span>4/05/2016</span>
+            <a href="#">&times;</a>
+            <a href="#" class="active">&#10003;</a>
+          </li>
+          <li id="saved-2">
+            <a href="#">Tree #2</a>
+            <span>5/11/2016</span>
+            <a href="#">&times;</a>
+            <a href="#">&#10003;</a>
+          </li>
+          <li id="saved-3">
+            <a href="#">Tree #3</a>
+            <span>5/13/2016</span>
+            <a href="#">&times;</a>
+            <a href="#">&#10003;</a>
+          </li>
+        </ol>
+      </section>
 
-      <!-- filters (right) -->
-
-      <!-- buttons; change, save [with name] (bottom) -->
-      <button id="btn-change">Change</button>
-      <button id="btn-save">Save</button>
-
-      <!-- checkbox to enable viewing bookmarks in new tab -->
-      <input type="checkbox">New tab view</input>
+      <section title="buttons">
+        <button id="btn-save" class="button-primary">Save</button>
+        <input type="checkbox">Enable tab view</input>
+      </section>
     </main>
 
     <footer>
