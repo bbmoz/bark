@@ -6,7 +6,11 @@ const srcs = {
   css: 'src/**/*.css',
   html: 'src/**/*.html',
   js: 'src/**/*.js',
-  misc: ['src/manifest.json', 'src/**/*.png']
+  misc: [
+    'src/manifest.json',
+    'src/**/*.png',
+    'node_modules/handlebars/dist/handlebars.min.js'
+  ]
 }
 const dist = 'dist/'
 
@@ -35,6 +39,9 @@ gulp.task('html', function (done) {
 gulp.task('js', function (done) {
   pump([
     gulp.src(srcs.js),
+    $.babel({
+      presets: ['es2015']
+    }),
     $.uglify(),
     gulp.dest(dist)
   ], done)

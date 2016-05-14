@@ -3,56 +3,50 @@
   <head>
     <title>bark</title>
     <link rel="stylesheet" href="popup.css">
+    <script src="../handlebars.min.js" defer></script>
+    <script src="templates/helpers.js" defer></script>
+    <script src="templates/templates.js" defer></script>
     <script src="popup.js" defer></script>
   </head>
 
   <body>
     <header>
-      <!-- logo -->
+      <h1>Bark</h1>
     </header>
 
-    <main>
-      <section title="active">
-        <h1>Active</h1>
-        <h2>Tree #1</h2>
-      </section>
+    <main></main>
 
-      <section title="zoned">
-        <h1>Zoned</h1>
-      </section>
+    <section title="modes">
+      <h1>Modes</h1>
+      <input type="radio" name="mode">Smart</input>
+      <input type="radio" name="mode">Date</input>
+      <input type="radio" name="mode">Active</input>
+    </section>
 
-      <section title="saved">
-        <h1>Saved</h1>
-        <ol>
-          <li id="saved-1">
-            <a href="#">Tree #1</a>
-            <span>4/05/2016</span>
-            <a href="#">&times;</a>
-            <a href="#" class="active">&#10003;</a>
-          </li>
-          <li id="saved-2">
-            <a href="#">Tree #2</a>
-            <span>5/11/2016</span>
-            <a href="#">&times;</a>
-            <a href="#">&#10003;</a>
-          </li>
-          <li id="saved-3">
-            <a href="#">Tree #3</a>
-            <span>5/13/2016</span>
-            <a href="#">&times;</a>
-            <a href="#">&#10003;</a>
-          </li>
-        </ol>
-      </section>
-
-      <section title="buttons">
-        <button id="btn-save" class="button-primary">Save</button>
-        <input type="checkbox">Enable tab view</input>
-      </section>
-    </main>
+    <section title="settings">
+      <h1>Settings</h1>
+      <input type="checkbox">Tab view</input>
+      <input type="checkbox">Sync to bookmarks</input>
+    </section>
 
     <footer>
-      <!-- social media share links -->
     </footer>
+
+    <!-- HANDLEBARS TEMPLATES -->
+    <script type="x-handlebars-template" id="active-template" src="templates/active-template.js">
+      {{#active-list barks}}
+        {{name}}
+      {{/active-list}}
+    </script>
+    <script type="x-handlebars-template" id="date-template" src="templates/date-template.js">
+      {{#date-list barks}}
+        {{name}}
+      {{/date-list}}
+    </script>
+    <script type="x-handlebars-template" id="smart-template" src="templates/smart-template.js">
+      {{#smart-list barks}}
+        {{name}}
+      {{/smart-list}}
+    </script>
   </body>
 </html>
