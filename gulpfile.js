@@ -18,8 +18,22 @@ gulp.task('css', function (done) {
   pump([
     gulp.src(srcs.css),
     $.postcss([
-      require('autoprefixer'),
-      require('cssnano')
+      require('stylelint')({
+        plugins: [
+          'stylelint-selector-bem-pattern'
+        ],
+        rules: {
+          'plugin/selector-bem-pattern': {
+            preset: 'bem'
+          }
+        }
+      }),
+      require('postcss-cssnext')({
+        warnForDuplicates: false
+      }),
+      require('postcss-neat'),
+      require('cssnano'),
+      require('postcss-reporter')
     ]),
     gulp.dest(dist)
   ], done)
