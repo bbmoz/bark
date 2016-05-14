@@ -1,22 +1,22 @@
-;(function templates (_d, _h) {
-  var sources = {
+;(function renderer (_d, _h) {
+  const sources = {
     active: _d.getElementById('active-template').innerHTML,
     date: _d.getElementById('date-template').innerHTML,
     smart: _d.getElementById('smart-template').innerHTML
   }
 
   function compileIntoTemplates (sources) {
-    var templates = {}
-    Object.keys(sources).forEach(function (sourceKey) {
+    const templates = {}
+    Object.keys(sources).forEach(sourceKey => {
       templates[sourceKey] = _h.compile(sources[sourceKey])
     })
     return templates
   }
 
-  var templates = compileIntoTemplates(sources)
+  const templates = compileIntoTemplates(sources)
 
   // test context
-  var testContext = {
+  const testContext = {
     barks: [{
       name: 'bark #1'
     }, {
@@ -25,6 +25,6 @@
       name: 'bark #3'
     }]
   }
-  var mainHtml = templates.smart(testContext)
+  const mainHtml = templates.smart(testContext)
   _d.querySelector('main').innerHTML = mainHtml
 }(document, Handlebars))

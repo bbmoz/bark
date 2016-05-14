@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "standard | snazzy",
-    "start": "gulp"
+    "clean": "rm -rf dist/"
   },
   "files": [
     "src/"

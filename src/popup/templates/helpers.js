@@ -1,25 +1,25 @@
 ;(function helpers (_h) {
-  _h.registerHelper('active-list', function (barks, options) {
-    var html = '<ul>'
-    barks.forEach(function (bark) {
-      html += '<li>' + options.fn(bark) + '</li>'
+  _h.registerHelper('active-list', (barks, options) => {
+    let html = '<ul>'
+    barks.forEach(bark => {
+      html += `<li>${options.fn(bark)}</li>`
     })
-    return html + '</ul>'
+    return `${html}</ul>`
   })
 
-  _h.registerHelper('date-list', function (barks, options) {
-    var html = '<ul>'
-    barks.forEach(function (bark) {
-      html += '<li>' + options.fn(bark) + '</li>'
+  _h.registerHelper('date-list', (barks, options) => {
+    let html = '<ul>'
+    barks.forEach(bark => {
+      html += `<li>${options.fn(bark)}</li>`
     })
-    return html + '</ul>'
+    return `${html}</ul>`
   })
 
-  _h.registerHelper('smart-list', function (barks, options) {
-    var html = '<ul>'
-    barks.forEach(function (bark) {
-      html += '<li>' + options.fn(bark) + '</li>'
+  _h.registerHelper('smart-list', (barks, options) => {
+    let html = '<ul>'
+    barks.forEach(bark => {
+      html += `<li>${options.fn(bark)}</li>`
     })
-    return html + '</ul>'
+    return `${html}</ul>`
   })
 }(Handlebars))
