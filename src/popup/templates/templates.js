@@ -1,4 +1,4 @@
-const templates = (function templates () {
+const templates = (function templates (_hb) {
   const sources = {
     active: `
       {{#active-list barks}}
@@ -20,12 +20,12 @@ const templates = (function templates () {
   function compileIntoTemplates (sources) {
     const templates = {}
     Object.keys(sources).forEach(sourceKey => {
-      templates[sourceKey] = _h.compile(sources[sourceKey])
+      templates[sourceKey] = _hb.compile(sources[sourceKey])
     })
     return templates
   }
 
   return compileIntoTemplates(sources)
-}())
+}(Handlebars))
 
 export default templates
