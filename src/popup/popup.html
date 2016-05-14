@@ -3,9 +3,7 @@
   <head>
     <title>bark</title>
     <link rel="stylesheet" href="popup.css">
-    <script src="../handlebars.min.js" defer></script>
-    <script src="templates/helpers.js" defer></script>
-    <script src="templates/templates.js" defer></script>
+    <script src="handlebars.min.js" defer></script>
     <script src="popup.js" defer></script>
   </head>
 
@@ -31,22 +29,5 @@
 
     <footer>
     </footer>
-
-    <!-- HANDLEBARS TEMPLATES -->
-    <script type="x-handlebars-template" id="active-template" src="templates/active-template.js">
-      {{#active-list barks}}
-        {{name}}
-      {{/active-list}}
-    </script>
-    <script type="x-handlebars-template" id="date-template" src="templates/date-template.js">
-      {{#date-list barks}}
-        {{name}}
-      {{/date-list}}
-    </script>
-    <script type="x-handlebars-template" id="smart-template" src="templates/smart-template.js">
-      {{#smart-list barks}}
-        {{name}}
-      {{/smart-list}}
-    </script>
   </body>
 </html>

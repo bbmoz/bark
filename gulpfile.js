@@ -1,5 +1,7 @@
 const gulp = require('gulp')
 const pump = require('pump')
+const webpack = require('webpack')
+const webpackStream = require('webpack-stream')
 const $ = require('gulp-load-plugins')()
 
 const srcs = {
@@ -17,6 +19,7 @@ const dist = 'dist/'
 gulp.task('css', function (done) {
   pump([
     gulp.src(srcs.css),
+    $.flatten(),
     $.postcss([
       require('stylelint')({
         plugins: [
@@ -42,6 +45,7 @@ gulp.task('css', function (done) {
 gulp.task('html', function (done) {
   pump([
     gulp.src(srcs.html),
+    $.flatten(),
     $.htmlmin({
       collapseWhitespace: true,
       removeComments: true
@@ -52,11 +56,31 @@ gulp.task('html', function (done) {
 
 gulp.task('js', function (done) {
   pump([
-    gulp.src(srcs.js),
-    $.babel({
-      presets: ['es2015']
+    gulp.src('noop'),
+    webpackStream({
+      entry: {
+        popup: './src/popup/popup.js',
+        devtools: './src/devtools/devtools.js',
+        omnibox: './src/omnibox/omnibox.js'
+      },
+      output: {
+        filename: '[name].js'
+      },
+      module: {
+        loaders: [{
+          test: /\.js/,
+          loader: 'babel',
+          query: {
+            presets: ['es2015'],
+            plugins: ['transform-runtime']
+          },
+          exclude: /node_modules/
+        }]
+      },
+      plugins: [
+        new webpack.optimize.UglifyJsPlugin()
+      ]
     }),
-    $.uglify(),
     gulp.dest(dist)
   ], done)
 })

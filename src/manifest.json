@@ -7,7 +7,7 @@
 
   "browser_action": {
     "default_icon": "icon.png",
-    "default_popup": "popup/popup.html",
+    "default_popup": "popup.html",
     "default_title": "Manage your bookmarks!"
   },
   "permissions": [
@@ -15,14 +15,14 @@
     "storage"
   ],
   "background": {
-    "scripts": ["omnibox/omnibox.js"],
+    "scripts": ["omnibox.js"],
     "persistent": false
   },
-  "devtools_page": "devtools/devtools.html",
+  "devtools_page": "devtools.html",
   "omnibox": {
     "keyword": "bark"
   },
   "chrome_url_overrides": {
-    "newtab": "popup/popup.html"
+    "newtab": "popup.html"
   }
 }

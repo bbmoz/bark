@@ -1,7 +1,7 @@
 ;(function omnibox (_c) {
   _c.omnibox.onInputChanged.addListener((text, suggest) => {
     suggest([{
-      content: '+', description: 'zone'
+      content: '+', description: 'add bark'
     }])
   })
 
