@@ -63,8 +63,7 @@
   "standard": {
     "globals": [
       "chrome",
-      "Handlebars",
-      "Templates"
+      "Handlebars"
     ]
   }
 }
