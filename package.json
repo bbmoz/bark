@@ -1,15 +1,15 @@
 {
-  "name": "libmark",
+  "name": "bark",
   "version": "0.0.1",
   "description": "Smart bookmark manager",
   "license": "MIT",
-  "homepage": "https://github.com/bbmoz/libmark/blob/master/README.md",
+  "homepage": "https://github.com/bbmoz/bark/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bbmoz/libmark"
+    "url": "https://github.com/bbmoz/bark"
   },
   "bugs": {
-    "url": "https://github.com/bbmoz/libmark/issues"
+    "url": "https://github.com/bbmoz/bark/issues"
   },
   "author": {
     "name": "Joe Lee"
@@ -25,9 +25,11 @@
     "src/"
   ],
   "keywords": [
-    "libmark",
+    "bark",
     "bookmark",
     "bookmarks",
+    "pagemark",
+    "pagemarks",
     "manager",
     "favorite",
     "favorites",

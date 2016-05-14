@@ -1,9 +1,9 @@
 ;(function popup (_c, _w) {
   function updateZone (pageUrl) {
-    _c.storage.sync.get('libmark:zone', function (zone) {
+    _c.storage.sync.get('bark:zone', function (zone) {
       var newZone = zone instanceof Array ? zone.concat(pageUrl) : [pageUrl]
       _c.storage.sync.set({
-        'libmark:zone': newZone
+        'bark:zone': newZone
       })
     })
   }

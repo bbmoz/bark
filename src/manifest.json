@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "libmark",
+  "name": "bark",
   "description": "Smart bookmark manager",
   "version": "0.0.1",
 
@@ -20,7 +20,7 @@
   },
   "devtools_page": "devtools/devtools.html",
   "omnibox": {
-    "keyword": "libmark"
+    "keyword": "bark"
   },
   "chrome_url_overrides": {
     "newtab": "newtab/newtab.html"

@@ -1,6 +1,6 @@
 ;(function devtools (_c) {
   _c.devtools.panels.create(
-    'libmark',
+    'bark',
     '../icon.png',
     '../popup/popup.html'
   )
