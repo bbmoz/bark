@@ -2,24 +2,6 @@ body {
   width: 250px;
 }
 
-body h1 {
-  font-size: 3rem;
-}
-
-body h2 {
-  font-size: 2rem;
-}
-
-section[title="saved"] > ol > li:first-child {
-  font-weight: bolder;
-}
-
-button[disabled] {
-  background-color: lightgreen;
-}
-
-.active {
-  color: green;
-  cursor: default;
-  pointer-events: none;
+iframe {
+  display: none;
 }
