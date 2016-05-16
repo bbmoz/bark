@@ -1,5 +1,20 @@
 ;(function popup (_c, _w) {
-  const $templates = document.getElementById('iframe-templates')
+  // execute
+  _c.runtime.onMessage.addListener(updateBarks)
+  $radios.smart.addEventListener('click', updateBarksView)
+  $radios.date.addEventListener('click', updateBarksView)
+  $radios.active.addEventListener('click', updateBarksView)
+  _w.addEventListener('message', updateBarksView)
+  $templates.addEventListener('load', requestUpdateBarksView)
+
+  // setup
+  const $templates = _w.document.getElementById('iframe-templates')
+  const $main = _w.document.querySelector('main')
+  const $radios = {
+    smart: document.getElementById('mode-smart'),
+    date: document.getElementById('mode-date'),
+    active: document.getElementById('mode-active')
+  }
   const context = { // test
     barks: [{
       name: 'bark #1'
@@ -10,15 +25,7 @@
     }]
   }
 
-  function addToBarks (pageUrl) {
-    _c.storage.sync.get('barks', barks => {
-      const newBarks = barks instanceof Array ? barks.concat(pageUrl) : [pageUrl]
-      _c.storage.sync.set({
-        'barks': newBarks
-      })
-    })
-  }
-
+  // define
   function updateBadgeNumNewBarks (amount) {
     _c.browserAction.getBadgeText(badgeText => {
       const newBadgeText = badgeText ? +badgeText + amount : 0
@@ -28,48 +35,45 @@
     })
   }
 
-  function addCurPageUrlToBarks () {
+  function addToBarksStorage (pageUrl) {
+    _c.storage.sync.get('barks', barks => {
+      const newBarks = barks instanceof Array ? barks.concat(pageUrl) : [pageUrl]
+      _c.storage.sync.set({
+        'barks': newBarks
+      })
+    })
+  }
+
+  function addCurPageUrlToBarksStorage () {
     _c.tabs.query({
       active: true,
       lastFocusedWindow: true
     }, tabs => {
       const curPageUrl = tabs[0].url
-      addToBarks(curPageUrl)
+      addToBarksStorage(curPageUrl)
     })
   }
 
-  _c.runtime.onMessage.addListener(msg => {
-    if (msg === '+') {
+  function updateBarks (omniboxMsg) {
+    if (omniboxMsg === '+') {
       updateBadgeNumNewBarks(1)
-      addCurPageUrlToBarks()
+      addCurPageUrlToBarksStorage()
     }
-  })
+  }
 
-  function updateBarksView () {
+  function requestUpdateBarksView () {
     $templates.contentWindow.postMessage({
-      command: 'render',
+      command: 'render-request',
       context: context,
       mode: _w.document.querySelector('input[name="mode"]:checked').value
     }, '*')
   }
 
-  function updateTemplatesIframe (height) {
-    $templates.style.visibility = 'hidden'
-    $templates.style.height = `${height}px` || '10px'
-    $templates.style.visibility = 'visible'
-  }
+  function updateBarksView (event) {
+    const [command, templateHtml] = [event.data.command, event.data.templateHtml]
 
-  document.getElementById('mode-smart').addEventListener('click', updateBarksView)
-  document.getElementById('mode-date').addEventListener('click', updateBarksView)
-  document.getElementById('mode-active').addEventListener('click', updateBarksView)
-
-  _w.addEventListener('message', event => {
-    const [command, height] = [event.data.command, event.data.height]
-
-    if (command === 'render-done') {
-      updateTemplatesIframe(height)
+    if (command === 'render-response') {
+      $main.innerHTML = templateHtml
     }
-  })
-
-  $templates.addEventListener('load', updateBarksView)
+  }
 }(chrome, window))

@@ -1,5 +1,5 @@
-const helpers = (function helpers () {
-  return {
+export default (function helpers (_hb) {
+  const hbHelpers = {
     'active': (barks, options) => {
       let html = '<ul>'
       barks.forEach(bark => {
@@ -24,6 +24,12 @@ const helpers = (function helpers () {
       return `${html}</ul>`
     }
   }
-}())
 
-export default helpers
+  return {
+    register: () => {
+      Object.keys(hbHelpers).forEach(helperKey => {
+        _hb.registerHelper(helperKey, hbHelpers[helperKey])
+      })
+    }
+  }
+}(Handlebars))
