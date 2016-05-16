@@ -32,19 +32,22 @@ import helpers from './helpers'
     )
   }
 
+  $main.innerHTML = 'did this work?'
+
   _w.addEventListener('message', event => {
     const [command, context, mode] = [event.data.command, event.data.context, event.data.mode]
 
+    $main.innerHTML = command
+
     if (command === 'render') {
-      const height = getHeight()
       $main.innerHTML = compiledTemplates[mode](context)
 
       event.source.postMessage({
         command: 'render-done',
-        height: height
-      }, event.origin)
+        height: getHeight()
+      }, event.origin || event.originalEvent.origin)
     }
-  })
+  }, false)
 
   registerHandlebarsHelpers()
   const compiledTemplates = compileIntoTemplates(sources)

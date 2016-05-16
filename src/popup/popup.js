@@ -1,6 +1,6 @@
 ;(function popup (_c, _w) {
   const $templates = document.getElementById('iframe-templates')
-  const context = {
+  const context = { // test
     barks: [{
       name: 'bark #1'
     }, {
@@ -71,5 +71,5 @@
     }
   })
 
-  updateBarksView()
+  $templates.addEventListener('load', updateBarksView)
 }(chrome, window))
