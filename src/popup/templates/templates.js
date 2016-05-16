@@ -23,14 +23,25 @@ import helpers from './helpers'
     })
   }
 
+  function getHeight () {
+    const [body, html] = [_w.document.body, _w.document.documentElement]
+
+    return Math.max(
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight
+    )
+  }
+
   _w.addEventListener('message', event => {
-    const [command, name, context] = [event.data.command, event.data.name, event.data.context]
+    const [command, context, mode] = [event.data.command, event.data.context, event.data.mode]
 
     if (command === 'render') {
-      $main.innerHTML = compiledTemplates[name](context)
+      const height = getHeight()
+      $main.innerHTML = compiledTemplates[mode](context)
 
       event.source.postMessage({
-        command: 'render-done'
+        command: 'render-done',
+        height: height
       }, event.origin)
     }
   })

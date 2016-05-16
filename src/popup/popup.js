@@ -49,32 +49,27 @@
     $templates.contentWindow.postMessage({
       command: 'render',
       context: context,
-      name: _w.document.querySelector('input[name="mode"]:checked').value
-    })
+      mode: _w.document.querySelector('input[name="mode"]:checked').value
+    }, '*')
   }
 
-  function updateTemplatesIframe () {
-    const doc = $templates.contentDocument != null ? $templates.contentDocument : $templates.contentWindow.document
-    const [body, html] = [doc.body, doc.documentElement]
+  function updateTemplatesIframe (height) {
     $templates.style.visibility = 'hidden'
-    $templates.style.height = '10px'
-    $templates.style.height = Math.max(
-      body.scrollHeight, body.offsetHeight,
-      html.clientHeight, html.scrollHeight, html.offsetHeight
-    )
+    $templates.style.height = `${height}px` || '10px'
     $templates.style.visibility = 'visible'
   }
 
   document.getElementById('mode-smart').addEventListener('click', updateBarksView)
   document.getElementById('mode-date').addEventListener('click', updateBarksView)
   document.getElementById('mode-active').addEventListener('click', updateBarksView)
-  updateBarksView()
-
-  $templates.addEventListener('load', updateTemplatesIframe)
 
   _w.addEventListener('message', event => {
-    if (event.data.command === 'render-done') {
-      updateTemplatesIframe()
+    const [command, height] = [event.data.command, event.data.height]
+
+    if (command === 'render-done') {
+      updateTemplatesIframe(height)
     }
   })
+
+  updateBarksView()
 }(chrome, window))
