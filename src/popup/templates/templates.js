@@ -1,31 +1,40 @@
-const templates = (function templates (_hb) {
+import helpers from './helpers'
+
+;(function templates (_w, _hb, __h) {
+  const $main = _w.document.querySelector('main')
+
   const sources = {
-    active: `
-      {{#active-list barks}}
-        {{name}}
-      {{/active-list}}
-    `,
-    date: `
-      {{#date-list barks}}
-        {{name}}
-      {{/date-list}}
-    `,
-    smart: `
-      {{#smart-list barks}}
-        {{name}}
-      {{/smart-list}}
-    `
+    smart: _w.document.getElementById('templates-smart').innerHTML,
+    date: _w.document.getElementById('templates-date').innerHTML,
+    active: _w.document.getElementById('templates-active').innerHTML
   }
 
   function compileIntoTemplates (sources) {
-    const templates = {}
+    const compiledTemplates = {}
     Object.keys(sources).forEach(sourceKey => {
-      templates[sourceKey] = _hb.compile(sources[sourceKey])
+      compiledTemplates[sourceKey] = _hb.compile(sources[sourceKey])
     })
-    return templates
+    return compiledTemplates
   }
 
-  return compileIntoTemplates(sources)
-}(Handlebars))
+  function registerHandlebarsHelpers () {
+    Object.keys(__h).forEach(helperKey => {
+      _hb.registerHelper(helperKey, __h[helperKey])
+    })
+  }
 
-export default templates
+  _w.addEventListener('message', event => {
+    const [command, name, context] = [event.data.command, event.data.name, event.data.context]
+
+    if (command === 'render') {
+      $main.innerHTML = compiledTemplates[name](context)
+
+      event.source.postMessage({
+        command: 'render-done'
+      }, event.origin)
+    }
+  })
+
+  registerHandlebarsHelpers()
+  const compiledTemplates = compileIntoTemplates(sources)
+}(window, Handlebars, helpers))

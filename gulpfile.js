@@ -61,7 +61,8 @@ gulp.task('js', function (done) {
       entry: {
         popup: './src/popup/popup.js',
         devtools: './src/devtools/devtools.js',
-        omnibox: './src/omnibox/omnibox.js'
+        omnibox: './src/omnibox/omnibox.js',
+        templates: './src/popup/templates/templates.js'
       },
       output: {
         filename: '[name].js'

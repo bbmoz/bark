@@ -24,5 +24,8 @@
   },
   "chrome_url_overrides": {
     "newtab": "popup.html"
+  },
+  "sandbox": {
+    "pages": ["templates.html"]
   }
 }

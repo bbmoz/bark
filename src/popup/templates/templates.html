@@ -1,0 +1,22 @@
+<script src="handlebars.min.js" defer></script>
+<script src="templates.js" defer></script>
+
+<main></main>
+
+<script id="templates-smart" type="text/x-handlebars-template">
+  {{#smart barks}}
+    {{name}}
+  {{/active-list}}
+</script>
+
+<script id="templates-date" type="text/x-handlebars-template">
+  {{#date barks}}
+    {{name}}
+  {{/active-list}}
+</script>
+
+<script id="templates-active" type="text/x-handlebars-template">
+  {{#active barks}}
+    {{name}}
+  {{/active-list}}
+</script>

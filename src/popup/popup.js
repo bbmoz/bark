@@ -1,7 +1,15 @@
-import helpers from './templates/helpers'
-import templates from './templates/templates'
+;(function popup (_c, _w) {
+  const $templates = document.getElementById('iframe-templates')
+  const context = {
+    barks: [{
+      name: 'bark #1'
+    }, {
+      name: 'bark #2'
+    }, {
+      name: 'bark #3'
+    }]
+  }
 
-;(function popup (_c, _w, _hb, __h, __t) {
   function addToBarks (pageUrl) {
     _c.storage.sync.get('barks', barks => {
       const newBarks = barks instanceof Array ? barks.concat(pageUrl) : [pageUrl]
@@ -30,12 +38,6 @@ import templates from './templates/templates'
     })
   }
 
-  function registerHandlebarsHelpers () {
-    Object.keys(__h).forEach(helperKey => {
-      _hb.registerHelper(helperKey, __h[helperKey])
-    })
-  }
-
   _c.runtime.onMessage.addListener(msg => {
     if (msg === '+') {
       updateBadgeNumNewBarks(1)
@@ -43,18 +45,36 @@ import templates from './templates/templates'
     }
   })
 
-  registerHandlebarsHelpers()
-
-  // test context
-  const testContext = {
-    barks: [{
-      name: 'bark #1'
-    }, {
-      name: 'bark #2'
-    }, {
-      name: 'bark #3'
-    }]
+  function updateBarksView () {
+    $templates.contentWindow.postMessage({
+      command: 'render',
+      context: context,
+      name: _w.document.querySelector('input[name="mode"]:checked').value
+    })
   }
-  const mainHtml = __t.smart(testContext)
-  _w.document.querySelector('main').innerHTML = mainHtml
-}(chrome, window, Handlebars, helpers, templates))
+
+  function updateTemplatesIframe () {
+    const doc = $templates.contentDocument != null ? $templates.contentDocument : $templates.contentWindow.document
+    const [body, html] = [doc.body, doc.documentElement]
+    $templates.style.visibility = 'hidden'
+    $templates.style.height = '10px'
+    $templates.style.height = Math.max(
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight
+    )
+    $templates.style.visibility = 'visible'
+  }
+
+  document.getElementById('mode-smart').addEventListener('click', updateBarksView)
+  document.getElementById('mode-date').addEventListener('click', updateBarksView)
+  document.getElementById('mode-active').addEventListener('click', updateBarksView)
+  updateBarksView()
+
+  $templates.addEventListener('load', updateTemplatesIframe)
+
+  _w.addEventListener('message', event => {
+    if (event.data.command === 'render-done') {
+      updateTemplatesIframe()
+    }
+  })
+}(chrome, window))

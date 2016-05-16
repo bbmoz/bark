@@ -1,6 +1,6 @@
 const helpers = (function helpers () {
   return {
-    'active-list': (barks, options) => {
+    'active': (barks, options) => {
       let html = '<ul>'
       barks.forEach(bark => {
         html += `<li>${options.fn(bark)}</li>`
@@ -8,7 +8,7 @@ const helpers = (function helpers () {
       return `${html}</ul>`
     },
 
-    'date-list': (barks, options) => {
+    'date': (barks, options) => {
       let html = '<ul>'
       barks.forEach(bark => {
         html += `<li>${options.fn(bark)}</li>`
@@ -16,7 +16,7 @@ const helpers = (function helpers () {
       return `${html}</ul>`
     },
 
-    'smart-list': (barks, options) => {
+    'smart': (barks, options) => {
       let html = '<ul>'
       barks.forEach(bark => {
         html += `<li>${options.fn(bark)}</li>`

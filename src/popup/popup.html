@@ -3,7 +3,6 @@
   <head>
     <title>bark</title>
     <link rel="stylesheet" href="popup.css">
-    <script src="handlebars.min.js" defer></script>
     <script src="popup.js" defer></script>
   </head>
 
@@ -12,19 +11,19 @@
       <h1>Bark</h1>
     </header>
 
-    <main></main>
+    <iframe id="iframe-templates" src="templates.html"></iframe>
 
     <section title="modes">
       <h1>Modes</h1>
-      <input type="radio" name="mode">Smart</input>
-      <input type="radio" name="mode">Date</input>
-      <input type="radio" name="mode">Active</input>
+      <input id="mode-smart" type="radio" name="mode" value="smart" accessKey="S" selected="true">Smart</input>
+      <input id="mode-date" type="radio" name="mode" value="date" accessKey="D">Date</input>
+      <input id="mode-active" type="radio" name="mode" value="active" accessKey="A">Active</input>
     </section>
 
     <section title="settings">
       <h1>Settings</h1>
-      <input type="checkbox">Tab view</input>
-      <input type="checkbox">Sync to bookmarks</input>
+      <input id="settings-tab" type="checkbox">Tab view</input>
+      <input id="settings-sync" type="checkbox">Sync to bookmarks</input>
     </section>
 
     <footer>
