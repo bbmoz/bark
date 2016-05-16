@@ -1,13 +1,4 @@
 ;(function popup (_c, _w) {
-  // execute
-  _c.runtime.onMessage.addListener(updateBarks)
-  $radios.smart.addEventListener('click', updateBarksView)
-  $radios.date.addEventListener('click', updateBarksView)
-  $radios.active.addEventListener('click', updateBarksView)
-  _w.addEventListener('message', updateBarksView)
-  $templates.addEventListener('load', requestUpdateBarksView)
-
-  // setup
   const $templates = _w.document.getElementById('iframe-templates')
   const $main = _w.document.querySelector('main')
   const $radios = {
@@ -25,7 +16,6 @@
     }]
   }
 
-  // define
   function updateBadgeNumNewBarks (amount) {
     _c.browserAction.getBadgeText(badgeText => {
       const newBadgeText = badgeText ? +badgeText + amount : 0
@@ -76,4 +66,11 @@
       $main.innerHTML = templateHtml
     }
   }
+
+  _c.runtime.onMessage.addListener(updateBarks)
+  $radios.smart.addEventListener('click', updateBarksView)
+  $radios.date.addEventListener('click', updateBarksView)
+  $radios.active.addEventListener('click', updateBarksView)
+  _w.addEventListener('message', updateBarksView)
+  $templates.addEventListener('load', requestUpdateBarksView)
 }(chrome, window))

@@ -1,19 +1,12 @@
 import helpers from './helpers'
 
 ;(function templates (_w, _hb, __h) {
-  // execute
-  __h.register()
-  _w.addEventListener('message', generateHtmlFromContext, false)
-  const compiledTemplates = compileIntoTemplates(sources)
-
-  // setup
   const sources = {
     smart: _w.document.getElementById('templates-smart').innerHTML,
     date: _w.document.getElementById('templates-date').innerHTML,
     active: _w.document.getElementById('templates-active').innerHTML
   }
 
-  // define
   function compileIntoTemplates (sources) {
     const compiledTemplates = {}
 
@@ -36,4 +29,8 @@ import helpers from './helpers'
       }, origin)
     }
   }
+
+  __h.register()
+  _w.addEventListener('message', generateHtmlFromContext, false)
+  const compiledTemplates = compileIntoTemplates(sources)
 }(window, Handlebars, helpers))
