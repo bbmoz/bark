@@ -6,15 +6,6 @@
     date: document.getElementById('mode-date'),
     active: document.getElementById('mode-active')
   }
-  const context = { // test
-    barks: [{
-      name: 'bark #1'
-    }, {
-      name: 'bark #2'
-    }, {
-      name: 'bark #3'
-    }]
-  }
 
   function updateBadgeNumNewBarks (amount) {
     _c.browserAction.getBadgeText(badgeText => {
@@ -51,26 +42,43 @@
     }
   }
 
+  function generateContextFromBarks (cb) {
+    _c.storage.sync.get('barks', barks => {
+      const context = barks instanceof Array ? barks.map(bark => {
+        return {
+          name: bark
+        }
+      }) : []
+      cb(context)
+    })
+  }
+
   function requestUpdateBarksView () {
-    $templates.contentWindow.postMessage({
-      command: 'render-request',
-      context: context,
-      mode: _w.document.querySelector('input[name="mode"]:checked').value
-    }, '*')
+    const mode = _w.document.querySelector('input[name="mode"]:checked').value
+
+    generateContextFromBarks(context => {
+      if (context.length > 0) {
+        $templates.context.postMessage({
+          command: 'render-request',
+          context: context,
+          mode: mode
+        }, '*')
+      }
+    })
   }
 
   function updateBarksView (event) {
-    const [command, templateHtml] = [event.data.command, event.data.templateHtml]
+    const command = event.data.command
 
     if (command === 'render-response') {
-      $main.innerHTML = templateHtml
+      $main.innerHTML = event.data.templateHtml
     }
   }
 
   _c.runtime.onMessage.addListener(updateBarks)
-  $radios.smart.addEventListener('click', updateBarksView)
-  $radios.date.addEventListener('click', updateBarksView)
-  $radios.active.addEventListener('click', updateBarksView)
-  _w.addEventListener('message', updateBarksView)
+  $radios.smart.addEventListener('click', requestUpdateBarksView)
+  $radios.date.addEventListener('click', requestUpdateBarksView)
+  $radios.active.addEventListener('click', requestUpdateBarksView)
   $templates.addEventListener('load', requestUpdateBarksView)
+  _w.addEventListener('message', updateBarksView)
 }(chrome, window))

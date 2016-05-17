@@ -2,19 +2,19 @@
 <script src="templates.js" defer></script>
 
 <script id="templates-smart" type="text/x-handlebars-template">
-  {{#smart barks}}
+  {{#smart this}}
     {{name}}
   {{/smart}}
 </script>
 
 <script id="templates-date" type="text/x-handlebars-template">
-  {{#date barks}}
+  {{#date this}}
     {{name}}
   {{/date}}
 </script>
 
 <script id="templates-active" type="text/x-handlebars-template">
-  {{#active barks}}
+  {{#active this}}
     {{name}}
   {{/active}}
 </script>

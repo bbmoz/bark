@@ -18,11 +18,14 @@ import helpers from './helpers'
   }
 
   function generateHtmlFromContext (event) {
-    const [command, context, mode] = [event.data.command, event.data.context, event.data.mode]
-    const templateHtml = compiledTemplates[mode](context)
-    const origin = event.origin || event.originalEvent.origin
+    const command = event.data.command
 
     if (command === 'render-request') {
+      const context = event.data.context
+      const mode = event.data.mode
+      const origin = event.origin || event.originalEvent.origin
+      const templateHtml = compiledTemplates[mode](context)
+
       event.source.postMessage({
         command: 'render-response',
         templateHtml: templateHtml
@@ -31,6 +34,6 @@ import helpers from './helpers'
   }
 
   __h.register()
-  _w.addEventListener('message', generateHtmlFromContext, false)
+  _w.addEventListener('message', generateHtmlFromContext)
   const compiledTemplates = compileIntoTemplates(sources)
 }(window, Handlebars, helpers))
