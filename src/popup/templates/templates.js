@@ -1,10 +1,11 @@
 import helpers from './helpers'
+import filters from './../filters/filters'
 
-;(function templates (_w, _hb, __h) {
+;(function templates (_w, _hb, __h, __f) {
   const sources = {
     smart: _w.document.getElementById('templates-smart').innerHTML,
-    date: _w.document.getElementById('templates-date').innerHTML,
-    active: _w.document.getElementById('templates-active').innerHTML
+    date: _w.document.getElementById('templates-standard').innerHTML,
+    active: _w.document.getElementById('templates-standard').innerHTML
   }
 
   function compileIntoTemplates (sources) {
@@ -17,6 +18,12 @@ import helpers from './helpers'
     return compiledTemplates
   }
 
+  function applyFilterToContext (context, mode) {
+    Object.defineProperty(context, 'barks', {
+      get: __f[mode]
+    })
+  }
+
   function generateHtmlFromContext (event) {
     const command = event.data.command
 
@@ -24,6 +31,8 @@ import helpers from './helpers'
       const context = event.data.context
       const mode = event.data.mode
       const origin = event.origin || event.originalEvent.origin
+
+      applyFilterToContext(context, mode)
       const templateHtml = compiledTemplates[mode](context)
 
       event.source.postMessage({
@@ -36,4 +45,4 @@ import helpers from './helpers'
   __h.register()
   _w.addEventListener('message', generateHtmlFromContext)
   const compiledTemplates = compileIntoTemplates(sources)
-}(window, Handlebars, helpers))
+}(window, Handlebars, helpers, filters))

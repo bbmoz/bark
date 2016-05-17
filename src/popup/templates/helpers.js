@@ -1,25 +1,17 @@
 export default (function helpers (_hb) {
   const unregisteredHelpers = {
-    'active': (barks, options) => {
+    smart: (contextArray, options) => {
       let html = '<ul>'
-      barks.forEach(bark => {
-        html += `<li>${options.fn(bark)}</li>`
+      contextArray.forEach(context => {
+        html += `<li>${options.fn(context)}</li>`
       })
       return `${html}</ul>`
     },
 
-    'date': (barks, options) => {
+    standard: (contextArray, options) => {
       let html = '<ul>'
-      barks.forEach(bark => {
-        html += `<li>${options.fn(bark)}</li>`
-      })
-      return `${html}</ul>`
-    },
-
-    'smart': (barks, options) => {
-      let html = '<ul>'
-      barks.forEach(bark => {
-        html += `<li>${options.fn(bark)}</li>`
+      contextArray.forEach(context => {
+        html += `<li>${options.fn(context)}</li>`
       })
       return `${html}</ul>`
     }

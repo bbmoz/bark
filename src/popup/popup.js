@@ -1,5 +1,3 @@
-import filters from './filters/filters'
-
 ;(function popup (_c, _w) {
   const $templates = _w.document.getElementById('iframe-templates')
   const $main = _w.document.querySelector('main')
@@ -60,7 +58,7 @@ import filters from './filters/filters'
 
     generateContextFromBarks(context => {
       if (context.length > 0) {
-        $templates.context.postMessage({
+        $templates.contentWindow.postMessage({
           command: 'render-request',
           context: context,
           mode: mode
