@@ -4,6 +4,7 @@
   "description": "Smart bookmark manager",
   "license": "MIT",
   "homepage": "https://github.com/bbmoz/bark/blob/master/README.md",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/bbmoz/bark"
@@ -21,9 +22,6 @@
     "test": "standard --verbose | snazzy",
     "clean": "rm -rf dist/"
   },
-  "files": [
-    "src/"
-  ],
   "keywords": [
     "bark",
     "bookmark",
