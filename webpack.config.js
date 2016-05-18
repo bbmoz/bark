@@ -7,7 +7,9 @@ const $ = {
     Copy: require('copy-webpack-plugin')
   },
   postcss: {
+    stylelint: require('stylelint'),
     bem: require('postcss-bem-linter'),
+    cssnext: require('postcss-cssnext'),
     cssnano: require('cssnano'),
     reporter: require('postcss-reporter')
   }
@@ -62,7 +64,15 @@ module.exports = {
 
   postcss: function () {
     return [
+      $.postcss.stylelint({
+        config: {
+          extends: 'stylelint-config-standard'
+        }
+      }),
       $.postcss.bem,
+      $.postcss.cssnext({
+        warnForDuplicates: false
+      }),
       $.postcss.cssnano,
       $.postcss.reporter
     ]
