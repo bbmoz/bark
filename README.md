@@ -3,7 +3,8 @@
 > Smart bookmark manager
 
 [![Build Status](https://travis-ci.org/bbmoz/bark.svg?branch=master)](https://travis-ci.org/bbmoz/bark/)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Dev Dependencies](https://david-dm.org/bbmoz/bark/dev-status.svg)](https://david-dm.org/bbmoz/bark#info=devDependencies&view=table)
+[![JS Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## License
 
