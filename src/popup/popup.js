@@ -1,3 +1,5 @@
+import './popup.css'
+
 ;(function popup (_c, _w) {
   const $templates = _w.document.getElementById('iframe-templates')
   const $main = _w.document.querySelector('main')
