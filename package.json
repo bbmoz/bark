@@ -35,6 +35,12 @@
     "chrome",
     "extension"
   ],
+  "standard": {
+    "globals": [
+      "chrome",
+      "Handlebars"
+    ]
+  },
   "devDependencies": {
     "babel-core": "^6.8.0",
     "babel-loader": "^6.2.4",
@@ -44,7 +50,6 @@
     "copy-webpack-plugin": "^3.0.0",
     "css-loader": "^0.23.1",
     "cssnano": "^3.5.2",
-    "handlebars": "^4.0.5",
     "html-webpack-plugin": "^2.17.0",
     "postcss-bem-linter": "^2.5.1",
     "postcss-cssnext": "^2.5.2",
@@ -56,10 +61,7 @@
     "stylelint-config-standard": "^7.0.0",
     "webpack": "^1.13.0"
   },
-  "standard": {
-    "globals": [
-      "chrome",
-      "Handlebars"
-    ]
+  "dependencies": {
+    "handlebars": "^4.0.5"
   }
 }
