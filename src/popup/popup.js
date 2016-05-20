@@ -8,6 +8,13 @@ import './popup.css'
     date: document.getElementById('mode-date'),
     active: document.getElementById('mode-active')
   }
+  const $checkmarks = {
+    tab: document.getElementById('settings-tab'),
+    sync: document.getElementById('settings-sync')
+  }
+
+  let isSync = false
+  let isTab = false
 
   function updateBadgeNumNewBarks (amount) {
     _c.browserAction.getBadgeText(badgeText => {
@@ -83,4 +90,10 @@ import './popup.css'
   $radios.active.addEventListener('click', requestUpdateBarksView)
   $templates.addEventListener('load', requestUpdateBarksView)
   _w.addEventListener('message', updateBarksView)
+  $checkmarks.tab.addEventListener('change', function (event) {
+    isTab = event.target.checked
+  })
+  $checkmarks.sync.addEventListener('change', function (event) {
+    isSync = event.target.checked
+  })
 }(chrome, window))
