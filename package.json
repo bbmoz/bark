@@ -19,6 +19,7 @@
     "node": ">=4.2.0"
   },
   "scripts": {
+    "pretest": "npm outdated",
     "test": "standard --verbose | snazzy",
     "start": "webpack -d --watch --progress",
     "build": "rm -rf dist/ && webpack -p --progress"
@@ -59,7 +60,7 @@
     "standard": "^7.1.0",
     "stylelint": "^6.5.0",
     "stylelint-config-standard": "^8.0.0",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.1"
   },
   "dependencies": {
     "handlebars": "^4.0.5"

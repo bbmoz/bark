@@ -1,0 +1,20 @@
+engines:
+  eslint:
+    enabled: false
+  csslint:
+    enabled: false
+  fixme:
+    enabled: true
+  markdownlint:
+    enabled: true
+  shellcheck:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+ratings:
+  paths:
+  - src/**
+exclude_paths: []
