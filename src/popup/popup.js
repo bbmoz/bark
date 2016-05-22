@@ -41,26 +41,24 @@ Popup.prototype.requestUpdateBarksView = () => {
   })
 }
 
-Popup.prototype.updateBarksView = (event) => {
+Popup.prototype.updateBarksView = event => {
   if (event.data.command === 'render-response') {
     this.$main.innerHTML = event.data.templateHtml
   }
 }
 
-Popup.prototype.enableOrDisableTabPage = (event) => {
-  if (event.target.checked === true) {
-
-  } else {
-
-  }
+// TODO
+Popup.prototype.enableOrDisableTabPage = event => {
+  chrome.storage.sync.set({
+    newTabPage: event.target.checked
+  })
 }
 
-Popup.prototype.enableOrDisableBookmarksSync = (event) => {
-  if (event.target.checked === true) {
-
-  } else {
-
-  }
+// TODO
+Popup.prototype.enableOrDisableBookmarksSync = event => {
+  chrome.storage.sync.set({
+    bookmarksSync: event.target.checked
+  })
 }
 
 function addCurPageUrlToBarksStorage (done) {
