@@ -1,4 +1,7 @@
 language: node_js
+addons:
+  code_climate:
+    repo_token: 573f6446506c45007300212c
 cache:
   directories:
     - node_modules
