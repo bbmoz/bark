@@ -1,5 +1,5 @@
 import helpers from './helpers'
-import filters from './../filters/filters'
+import filters from './filters'
 
 ;(function templates (_w, _hb, __h, __f) {
   const sources = {
