@@ -17,10 +17,10 @@ const $ = {
 
 module.exports = {
   entry: {
-    popup: './src/popup/popup.js',
+    popup: './src/popup/boot.js',
     devtools: './src/devtools/devtools.js',
     omnibox: './src/omnibox/omnibox.js',
-    templates: './src/popup/templates/templates.js'
+    templates: './src/popup/templates/boot.js'
   },
 
   output: {

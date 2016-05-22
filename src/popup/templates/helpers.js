@@ -1,27 +1,27 @@
-export default (function helpers (_hb) {
-  const unregisteredHelpers = {
-    smart: (contextArray, options) => {
-      let html = '<ul>'
-      contextArray.forEach(context => {
-        html += `<li>${options.fn(context)}</li>`
-      })
-      return `${html}</ul>`
-    },
+import { Handlebars } from './../globals'
 
-    standard: (contextArray, options) => {
-      let html = '<ul>'
-      contextArray.forEach(context => {
-        html += `<li>${options.fn(context)}</li>`
-      })
-      return `${html}</ul>`
-    }
-  }
+const unregisteredHelpers = {
+  smart: (contextArray, options) => {
+    let html = '<ul>'
+    contextArray.forEach(context => {
+      html += `<li>${options.fn(context)}</li>`
+    })
+    return `${html}</ul>`
+  },
 
-  return {
-    register: () => {
-      Object.keys(unregisteredHelpers).forEach(helperKey => {
-        _hb.registerHelper(helperKey, unregisteredHelpers[helperKey])
-      })
-    }
+  standard: (contextArray, options) => {
+    let html = '<ul>'
+    contextArray.forEach(context => {
+      html += `<li>${options.fn(context)}</li>`
+    })
+    return `${html}</ul>`
   }
-}(Handlebars))
+}
+
+export default {
+  register: () => {
+    Object.keys(unregisteredHelpers).forEach(helperKey => {
+      Handlebars.registerHelper(helperKey, unregisteredHelpers[helperKey])
+    })
+  }
+}

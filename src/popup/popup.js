@@ -1,19 +1,15 @@
 import './popup.css'
 import { chrome, window, document } from './../globals'
 
-function Popup () {
-  this.$templates = document.getElementById('iframe-templates')
-  this.$main = document.querySelector('main')
-  this.$modes = {
-    smart: document.getElementById('mode-smart'),
-    date: document.getElementById('mode-date'),
-    active: document.getElementById('mode-active')
-  }
-  this.$settings = {
-    tab: document.getElementById('settings-tab'),
-    sync: document.getElementById('settings-sync')
-  }
+function Popup ($templates, $main, $modes, $settings) {
+  this.$templates = $templates
+  this.$main = $main
+  this.$modes = $modes
+  this.$settings = $settings
+  this._addListeners()
+}
 
+Popup.prototype._addListeners = () => {
   chrome.runtime.onMessage.addListener(this.updateBarks)
   this.$modes.smart.addEventListener('click', this.requestUpdateBarksView)
   this.$modes.date.addEventListener('click', this.requestUpdateBarksView)
@@ -77,7 +73,9 @@ function addCurPageUrlToBarksStorage () {
 
 function addToBarksStorage (pageUrl) {
   chrome.storage.sync.get('barks', barks => {
-    const newBarks = barks instanceof Array ? barks.concat(pageUrl) : [pageUrl]
+    const newBarks = barks instanceof Array
+      ? barks.concat(pageUrl)
+      : [pageUrl]
     chrome.storage.sync.set({
       'barks': newBarks
     }, () => {
@@ -105,3 +103,5 @@ function generateContextFromBarks (done) {
     done(context)
   })
 }
+
+export default Popup

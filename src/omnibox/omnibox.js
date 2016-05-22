@@ -1,13 +1,13 @@
-;(function omnibox (_c) {
-  _c.omnibox.onInputChanged.addListener((text, suggest) => {
-    suggest([{
-      content: '+', description: 'add bark'
-    }])
-  })
+import { chrome } from './../globals'
 
-  _c.omnibox.onInputEntered.addListener(omniboxText => {
-    if (omniboxText === '+') {
-      _c.runtime.sendMessage('+')
-    }
-  })
-}(chrome))
+chrome.omnibox.onInputChanged.addListener((text, suggest) => {
+  suggest([{
+    content: '+', description: 'add bark'
+  }])
+})
+
+chrome.omnibox.onInputEntered.addListener(omniboxText => {
+  if (omniboxText === '+') {
+    chrome.runtime.sendMessage('+')
+  }
+})
