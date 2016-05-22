@@ -1,4 +1,4 @@
-import { Handlebars } from './../globals'
+import { Handlebars } from './../../globals'
 
 const unregisteredHelpers = {
   smart: (contextArray, options) => {

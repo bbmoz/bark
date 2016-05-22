@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
-import Templates from './popup'
-import { document } from './globals'
+import Templates from './templates'
+import { document } from './../../globals'
 
 const sources = {
   smart: document.getElementById('templates-smart').innerHTML,

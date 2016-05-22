@@ -1,4 +1,4 @@
-import { window, Handlebars } from './../globals'
+import { window, Handlebars } from './../../globals'
 import helpers from './helpers'
 import filters from './filters'
 

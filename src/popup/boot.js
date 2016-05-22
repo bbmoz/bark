@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 import Popup from './popup'
-import { document } from './globals'
+import { document } from './../globals'
 
 const $templates = document.getElementById('iframe-templates')
 const $main = document.querySelector('main')
