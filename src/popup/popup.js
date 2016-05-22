@@ -1,99 +1,107 @@
 import './popup.css'
+import { chrome, window, document } from './../globals'
 
-;(function popup (_c, _w) {
-  const $templates = _w.document.getElementById('iframe-templates')
-  const $main = _w.document.querySelector('main')
-  const $radios = {
+function Popup () {
+  this.$templates = document.getElementById('iframe-templates')
+  this.$main = document.querySelector('main')
+  this.$modes = {
     smart: document.getElementById('mode-smart'),
     date: document.getElementById('mode-date'),
     active: document.getElementById('mode-active')
   }
-  const $checkmarks = {
+  this.$settings = {
     tab: document.getElementById('settings-tab'),
     sync: document.getElementById('settings-sync')
   }
 
-  let isSync = false
-  let isTab = false
+  chrome.runtime.onMessage.addListener(this.updateBarks)
+  this.$modes.smart.addEventListener('click', this.requestUpdateBarksView)
+  this.$modes.date.addEventListener('click', this.requestUpdateBarksView)
+  this.$modes.active.addEventListener('click', this.requestUpdateBarksView)
+  this.$templates.addEventListener('load', this.requestUpdateBarksView)
+  window.addEventListener('message', this.updateBarksView)
+  this.$settings.tab.addEventListener('change', this.enableOrDisableTabPage)
+  this.$settings.sync.addEventListener('change', this.enableOrDisableBookmarksSync)
+}
 
-  function updateBadgeNumNewBarks (amount) {
-    _c.browserAction.getBadgeText(badgeText => {
-      const newBadgeText = badgeText ? +badgeText + amount : 0
-      _c.browserAction.setBadgeText({
-        text: newBadgeText
-      })
-    })
+Popup.prototype.updateBarks = omniboxMsg => {
+  if (omniboxMsg === '+') {
+    addCurPageUrlToBarksStorage()
   }
+}
 
-  function addToBarksStorage (pageUrl) {
-    _c.storage.sync.get('barks', barks => {
-      const newBarks = barks instanceof Array ? barks.concat(pageUrl) : [pageUrl]
-      _c.storage.sync.set({
-        'barks': newBarks
-      })
-    })
-  }
-
-  function addCurPageUrlToBarksStorage () {
-    _c.tabs.query({
-      active: true,
-      lastFocusedWindow: true
-    }, tabs => {
-      const curPageUrl = tabs[0].url
-      addToBarksStorage(curPageUrl)
-    })
-  }
-
-  function updateBarks (omniboxMsg) {
-    if (omniboxMsg === '+') {
-      updateBadgeNumNewBarks(1)
-      addCurPageUrlToBarksStorage()
+Popup.prototype.requestUpdateBarksView = () => {
+  const mode = document.querySelector('input[name="mode"]:checked').value
+  generateContextFromBarks(context => {
+    if (context.length > 0) {
+      this.$templates.contentWindow.postMessage({
+        command: 'render-request',
+        context: context,
+        mode: mode
+      }, '*')
     }
+  })
+}
+
+Popup.prototype.updateBarksView = (event) => {
+  if (event.data.command === 'render-response') {
+    this.$main.innerHTML = event.data.templateHtml
   }
+}
 
-  function generateContextFromBarks (cb) {
-    _c.storage.sync.get('barks', barks => {
-      const context = barks instanceof Array ? barks.map(bark => {
-        return {
-          name: bark
-        }
-      }) : []
-      cb(context)
-    })
+Popup.prototype.enableOrDisableTabPage = (event) => {
+  if (event.target.checked === true) {
+
+  } else {
+
   }
+}
 
-  function requestUpdateBarksView () {
-    const mode = _w.document.querySelector('input[name="mode"]:checked').value
+Popup.prototype.enableOrDisableBookmarksSync = (event) => {
+  if (event.target.checked === true) {
 
-    generateContextFromBarks(context => {
-      if (context.length > 0) {
-        $templates.contentWindow.postMessage({
-          command: 'render-request',
-          context: context,
-          mode: mode
-        }, '*')
+  } else {
+
+  }
+}
+
+function addCurPageUrlToBarksStorage () {
+  chrome.tabs.query({
+    active: true,
+    lastFocusedWindow: true
+  }, tabs => {
+    const curPageUrl = tabs[0].url
+    addToBarksStorage(curPageUrl)
+  })
+}
+
+function addToBarksStorage (pageUrl) {
+  chrome.storage.sync.get('barks', barks => {
+    const newBarks = barks instanceof Array ? barks.concat(pageUrl) : [pageUrl]
+    chrome.storage.sync.set({
+      'barks': newBarks
+    }, () => {
+      if (chrome.runtime.lastError == null) {
+        addOneToBarksBadge()
       }
     })
-  }
-
-  function updateBarksView (event) {
-    const command = event.data.command
-
-    if (command === 'render-response') {
-      $main.innerHTML = event.data.templateHtml
-    }
-  }
-
-  _c.runtime.onMessage.addListener(updateBarks)
-  $radios.smart.addEventListener('click', requestUpdateBarksView)
-  $radios.date.addEventListener('click', requestUpdateBarksView)
-  $radios.active.addEventListener('click', requestUpdateBarksView)
-  $templates.addEventListener('load', requestUpdateBarksView)
-  _w.addEventListener('message', updateBarksView)
-  $checkmarks.tab.addEventListener('change', function (event) {
-    isTab = event.target.checked
   })
-  $checkmarks.sync.addEventListener('change', function (event) {
-    isSync = event.target.checked
+}
+
+function addOneToBarksBadge () {
+  chrome.browserAction.getBadgeText(badgeText => {
+    const newBadgeText = badgeText ? +badgeText + 1 : 0
+    chrome.browserAction.setBadgeText({
+      text: newBadgeText
+    })
   })
-}(chrome, window))
+}
+
+function generateContextFromBarks (done) {
+  chrome.storage.sync.get('barks', barks => {
+    const context = barks instanceof Array
+      ? barks.map(bark => { return { name: bark } })
+      : []
+    done(context)
+  })
+}
