@@ -10,7 +10,7 @@ function Popup ($templates, $main, $modes, $settings) {
 }
 
 Popup.prototype._addListeners = () => {
-  chrome.runtime.onMessage.addListener(this.updateBarks)
+  chrome.runtime.onMessage.addListener(this.updateBarksFromOmnibox)
   this.$modes.smart.addEventListener('click', this.requestUpdateBarksView)
   this.$modes.date.addEventListener('click', this.requestUpdateBarksView)
   this.$modes.active.addEventListener('click', this.requestUpdateBarksView)
@@ -20,9 +20,11 @@ Popup.prototype._addListeners = () => {
   this.$settings.sync.addEventListener('change', this.enableOrDisableBookmarksSync)
 }
 
-Popup.prototype.updateBarks = omniboxMsg => {
+Popup.prototype.updateBarksFromOmnibox = omniboxMsg => {
   if (omniboxMsg === '+') {
-    addCurPageUrlToBarksStorage()
+    addCurPageUrlToBarksStorage(() => {
+      requestUpdateBarksView()
+    })
   }
 }
 
@@ -61,17 +63,17 @@ Popup.prototype.enableOrDisableBookmarksSync = (event) => {
   }
 }
 
-function addCurPageUrlToBarksStorage () {
+function addCurPageUrlToBarksStorage (done) {
   chrome.tabs.query({
     active: true,
     lastFocusedWindow: true
   }, tabs => {
     const curPageUrl = tabs[0].url
-    addToBarksStorage(curPageUrl)
+    addToBarksStorage(curPageUrl, done)
   })
 }
 
-function addToBarksStorage (pageUrl) {
+function addToBarksStorage (pageUrl, done) {
   chrome.storage.sync.get('barks', barks => {
     const newBarks = barks instanceof Array
       ? barks.concat(pageUrl)
@@ -81,6 +83,7 @@ function addToBarksStorage (pageUrl) {
     }, () => {
       if (chrome.runtime.lastError == null) {
         addOneToBarksBadge()
+        done()
       }
     })
   })
