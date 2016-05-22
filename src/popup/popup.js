@@ -23,7 +23,7 @@ Popup.prototype._addListeners = () => {
 Popup.prototype.updateBarksFromOmnibox = omniboxMsg => {
   if (omniboxMsg === '+') {
     addCurPageUrlToBarksStorage(() => {
-      requestUpdateBarksView()
+      this.requestUpdateBarksView()
     })
   }
 }
