@@ -19,7 +19,6 @@
     "node": ">=4.2.0"
   },
   "scripts": {
-    "pretest": "npm outdated",
     "test": "standard --verbose | snazzy",
     "start": "webpack -d --watch --progress",
     "build": "rm -rf dist/ && webpack -p --progress"
